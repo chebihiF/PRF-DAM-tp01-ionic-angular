@@ -6,7 +6,7 @@ import { Recipe } from './recipe.model';
 })
 export class RecipesService {
 
-   private recipes: Recipe[] = [ //JSON
+  private recipes: Recipe[] = [ //JSON
     {
       id: 'r1',
       title: 'GRILLED BASIL CHICKEN',
@@ -32,7 +32,7 @@ export class RecipesService {
   }
 
   getRecipe(recipeId: string){
-    return {...this.recipes.find(recipe => recipe.id === recipeId)}
+    return this.recipes.find(recipe => recipe.id === recipeId)
   }
 
 
