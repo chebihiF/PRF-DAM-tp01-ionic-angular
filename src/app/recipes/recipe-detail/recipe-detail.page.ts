@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { AlertController, IonicModule } from '@ionic/angular';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from '../recipes.service';
 import { Recipe } from '../recipe.model';
 
@@ -16,8 +16,14 @@ import { Recipe } from '../recipe.model';
 export class RecipeDetailPage implements OnInit {
 
   loadedRecipe!: Recipe;
+  //private router: Router // NO IONC = null
 
-  constructor(private activateRoute: ActivatedRoute, private recipeService: RecipesService) { }
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private recipeService: RecipesService, //IOC
+    private router: Router,
+    private alertCtrl: AlertController
+    ) { }
 
   ngOnInit() {
     this.activateRoute.paramMap.subscribe(paramMap => {
@@ -28,6 +34,27 @@ export class RecipeDetailPage implements OnInit {
       const recipeId = paramMap.get('recipeId');
       this.loadedRecipe = this.recipeService.getRecipe(recipeId!)!;
     })
+  }
+
+  onDeleteRecipe() {
+    this.alertCtrl.create({
+      header: 'Are you sure ?',
+      message: 'Do you really want to delete the recipe ?',
+      buttons:[
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.recipeService.deleteRecipe(this.loadedRecipe.id);
+            this.router.navigate(['/recipes']);
+          }
+        }
+      ]
+    }).then(alertEl => alertEl.present());
+
   }
 
 }
