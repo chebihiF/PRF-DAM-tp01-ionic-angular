@@ -9,11 +9,11 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: RecipesPage
+        loadComponent: ()=> import('./recipes/recipes.page').then(p => p.RecipesPage)
       },
       {
         path: ':recipeId',
-        component: RecipeDetailPage
+        loadComponent: ()=> import('./recipes/recipe-detail/recipe-detail.page').then(p => p.RecipeDetailPage)
       }
     ]
   }

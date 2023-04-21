@@ -5,6 +5,7 @@ import { AlertController, IonicModule } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from '../recipes.service';
 import { Recipe } from '../recipe.model';
+import { log } from 'console';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -49,6 +50,7 @@ export class RecipeDetailPage implements OnInit {
           text: 'Delete',
           handler: () => {
             this.recipeService.deleteRecipe(this.loadedRecipe.id);
+            console.log(this.recipeService.getAllRecipes());
             this.router.navigate(['/recipes']);
           }
         }
